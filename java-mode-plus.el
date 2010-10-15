@@ -55,9 +55,12 @@
 
 ;; It is strongly recommended to use in conjunction with this package:
 ;;
+;; * java-docs - can be found alongside java-mode-plus
+;;
 ;; * ido-mode - packaged with Emacs for great minibuffer completion
 ;;
-;; * java-docs - can be found alongside java-mode-plus
+;; * winner-mode - maximize Emacs, split into a bunch of windows, and
+;;                 hop around them quickly with this
 
 ;; Enhancements to java-mode:
 
