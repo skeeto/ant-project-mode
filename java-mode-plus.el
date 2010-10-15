@@ -18,6 +18,13 @@
 ;; NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
 ;; CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+;;; Install:
+
+;; Put this file somewhere on your load path (like in .emacs.d), and
+;; require it. That it!
+
+;;    (require 'java-mode-plus)
+
 ;;; Commentary:
 
 ;; This package provides a hook that sets up extra features to enhance
