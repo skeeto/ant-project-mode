@@ -1,4 +1,4 @@
-;;; java-docs.el --- Java documentation Emacs integration
+;;; java-mode-plus.el --- Java and java-mode Emacs enhancements
 
 ;; Copyright (C) 2010 Christopher Wellons <mosquitopsu@gmail.com>
 
