@@ -67,7 +67,7 @@
 ;; * `ant-compile' - Like normal `compile', but automatically search
 ;;     up the path looking for a build.xml.
 
-;; * `open-java-project' - Use this on your project's src/
+;; * `open-java-project' - Use this on your project's root
 ;;     directory. Open up an entire source hierarchy at once, making
 ;;     it easy to switch between source files with ido-mode, and at
 ;;     the same time exposing lots of names for `dabbrev-expand'
@@ -120,10 +120,11 @@
 ;; buffers. I make mine a half-tall window on the top right.
 
 ;; So when you sit down to do some work at a fresh Emacs instance, the
-;; first thing you will do is run `open-java-project' on your src/
-;; directory (this may not be practical on very large projects). This
-;; will open all of your sources so they're very accessible. Using
-;; ido-mode will make switching between the sources pretty zippy.
+;; first thing you will do is run `open-java-project' on your
+;; project's root directory (this may not be practical on very large
+;; projects). This will open all of your sources so they're very
+;; accessible. Using ido-mode will make switching between the sources
+;; pretty zippy.
 
 ;; To help navigate, take advantage of a TAGS file. Use `find-tag'
 ;; (M-.) to move around your source. You can set up an Ant "tags"
@@ -133,8 +134,8 @@
 ;;   <delete file="TAGS"/>
 ;;   <apply executable="etags">
 ;;     <arg value="-a"/>
-;;     <fileset dir="${src.dir}" includes="**/*.java"/>
-;;     <fileset dir="${test.dir}" includes="**/*.java"/>
+;;     <fileset dir="src" includes="**/*.java"/>
+;;     <fileset dir="test" includes="**/*.java"/>
 ;;   </apply>
 ;; </target>
 
