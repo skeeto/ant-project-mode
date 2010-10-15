@@ -185,6 +185,9 @@
 
 (provide 'java-mode-plus)
 
+(defvar open-java-project-extensions '("xml" "java" "properties")
+  "File extensions to be opened when using `open-java-project'.")
+
 (defun ant-compile ()
   "Traveling up the path, find build.xml file and run compile."
   (interactive)
@@ -193,6 +196,11 @@
                 (not (equal "/" default-directory)))
       (cd ".."))
     (call-interactively 'compile)))
+
+(defun open-java-project-file-p (file)
+  "Determine if file should be opened by `open-java-project'."
+  (let ((ext (file-name-extension file)))
+    (member ext open-java-project-extensions)))
 
 ;; ID: 72dc0a9e-c41c-31f8-c8f5-d9db8482de1e
 (defun open-java-project (dir)
@@ -203,10 +211,11 @@ the given directory."
          (files (remove-if 'file-directory-p list))
          (dirs (remove-if-not 'file-directory-p list)))
     (dolist (file files)
-      (find-file-noselect file))
+      (if (open-java-project-file-p file)
+	  (find-file-noselect file)))
     (dolist (dir dirs)
       (find-file-noselect dir)
-      (find-all-files dir))))
+      (open-java-project dir))))
 
 ;; ID: c7db6dec-e7ab-3b0f-bf26-0fa268674c6c
 (defun expose (function)
