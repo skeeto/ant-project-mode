@@ -21,7 +21,7 @@
 ;;; Install:
 
 ;; Put this file somewhere on your load path (like in .emacs.d), and
-;; require it. That it!
+;; require it. That's it!
 
 ;;    (require 'java-mode-plus)
 
