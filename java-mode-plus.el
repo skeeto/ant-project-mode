@@ -244,4 +244,4 @@ the given directory."
 
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
-(setq compilation-scroll-output 'first-error)
+(setq compilation-scroll-output nil)
