@@ -55,12 +55,14 @@
 
 ;; It is strongly recommended to use in conjunction with this package:
 ;;
-;; * java-docs - can be found alongside java-mode-plus
+;; * java-docs - Found alongside java-mode-plus. Provides the
+;;               `insert-java-import' function for quickly adding
+;;               import statements.
 ;;
-;; * ido-mode - packaged with Emacs for great minibuffer completion
+;; * ido-mode - Packaged with Emacs for great minibuffer completion.
 ;;
-;; * winner-mode - maximize Emacs, split into a bunch of windows, and
-;;                 hop around them quickly with this
+;; * winner-mode - Maximize Emacs, split into a bunch of windows, and
+;;                 hop around them quickly with this.
 
 ;; Enhancements to java-mode:
 
@@ -83,6 +85,11 @@
 ;;     * C-x t - "test" target
 ;;     * C-x y - "check" target, if you're using Checkstyle
 ;;     * C-x f - "format" target, if you set up a Java indenter
+
+;; * `insert-java-import' - If you have java-docs set up, you can
+;;     access the quick import insertion function.
+;;
+;;     * C-x I - quickly select an import to insert
 
 ;; Recommended usage:
 
