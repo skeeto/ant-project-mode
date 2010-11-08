@@ -116,15 +116,15 @@
 ;; Use Emacs in daemon mode! This got *really* good in recent versions
 ;; of Emacs, so use it! You can either fire off an 'emacs --daemon'
 ;; when you first log in, and then use 'emacsclient' later, or you can
-;; use "emacsclient -ca ""' any time you need to use Emacs, which to
+;; use "emacsclient -ca ""' any time you need to use Emacs, which will
 ;; create a daemon for you if needed. As you'll see below, once you're
-;; set up with your project, you don't want to have to make Emacs do
-;; it all over again when you get back from lunch.
+;; set up with your project, you don't want to make Emacs do it all
+;; over again when you get back from lunch.
 
 ;; You'll want to dedicate a(n Emacs) window specifically to the
 ;; *compilation* buffer. Any time you do a compilation, it will
 ;; reliably be done here, rather than hopping around to various
-;; buffers. I make mine a half-tall window on the top right.
+;; windows. I make mine a half-tall window on the top right.
 
 ;; So when you sit down to do some work at a fresh Emacs instance, the
 ;; first thing you will do is run `open-java-project' on your

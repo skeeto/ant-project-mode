@@ -1,14 +1,15 @@
-See the header comments in each file for all the information. The
+See the header comments in each file for full documentation. The
 recommended usage is in java-mode-plus.el.
 
-To install drop these in your load-path somewhere and require them,
+To install drop these in your load-path somewhere and require them
+(after enabling ido-mode, if you use ido-mode),
 
-(require 'java-mode-plus)
-(require 'java-docs)
+  (require 'java-mode-plus)
+  (require 'java-docs)
 
 To use java-docs you'll need to tell it where to find some
 documentation. For example,
 
-(java-docs "/usr/share/doc/openjdk-6-jdk/api")
+  (java-docs "/usr/share/doc/openjdk-6-jdk/api")
 
 Then use C-h j to look something up.
