@@ -248,7 +248,7 @@ the given directory."
 	    (local-set-key "\C-xt" (create-ant-target "test"))
 	    (local-set-key "\C-xy" (create-ant-target "check"))
 	    (local-set-key "\C-xf" (create-ant-target "format"))
-	    (local-set-key "\C-xI" 'insert-java-import))) ; from java-docs
+	    (local-set-key "\C-xI" 'add-java-import))) ; from java-docs
 
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
