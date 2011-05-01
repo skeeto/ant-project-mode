@@ -239,6 +239,16 @@ the given directory."
 (ant-bind (kbd "C-c C-j y") "check")
 (ant-bind (kbd "C-c C-j f") "format")
 
+(defun java-mode-short-keybindings ()
+  "Create (old) short bindings for java-mode."
+  (interactive)
+  (ant-bind (kbd "C-x c") "")
+  (ant-bind (kbd "C-x C") "clean")
+  (ant-bind (kbd "C-x r") "run")
+  (ant-bind (kbd "C-x t") "test")
+  (ant-bind (kbd "C-x y") "check")
+  (ant-bind (kbd "C-x f") "format"))
+
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
 (setq compilation-scroll-output t)
