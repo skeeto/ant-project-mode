@@ -225,31 +225,23 @@ the given directory."
       (find-file-noselect dir)
       (open-java-project dir))))
 
-;; ID: c7db6dec-e7ab-3b0f-bf26-0fa268674c6c
-(defun expose (function)
-  "Return an interactive version of FUNCTION."
-  (lexical-let ((lex-func function))
-    (lambda ()
-      (interactive)
-      (funcall lex-func))))
+;;; Define bindings for various Ant targets
 
-(defun create-ant-target (name)
-  "Creates an interactive compile function for the target."
-  (expose (apply-partially 'compile (concat "ant -emacs " name " -find"))))
+(defmacro ant-bind (key target)
+  "Define a key binding for an Ant target in java-mode."
+  `(define-key java-mode-map ,key (lambda () (interactive)
+				    (compile (concat "ant -emacs " ,target " -find")))))
 
-(add-hook 'java-mode-hook
-          (lambda ()
-	    "Enhance java-mode with some extra features."
-	    (local-set-key "\C-x\C-k" 'ant-compile)
-	    (setq indent-tabs-mode nil)
-	    (local-set-key "\C-xc" (create-ant-target "")) ; default
-	    (local-set-key "\C-xC" (create-ant-target "clean"))
-	    (local-set-key "\C-xr" (create-ant-target "run"))
-	    (local-set-key "\C-xt" (create-ant-target "test"))
-	    (local-set-key "\C-xy" (create-ant-target "check"))
-	    (local-set-key "\C-xf" (create-ant-target "format"))
-	    (local-set-key "\C-xI" 'add-java-import))) ; from java-docs
+(ant-bind (kbd "C-c C-j c") "")		; default Ant target
+(ant-bind (kbd "C-c C-j C") "clean")
+(ant-bind (kbd "C-c C-j r") "run")
+(ant-bind (kbd "C-c C-j t") "test")
+(ant-bind (kbd "C-c C-j y") "check")
+(ant-bind (kbd "C-c C-j f") "format")
 
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
 (setq compilation-scroll-output t)
+
+;; Add the very handy binding from java-docs
+(define-key java-mode-map "\C-xI" 'add-java-import)
