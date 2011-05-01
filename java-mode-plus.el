@@ -225,6 +225,9 @@ the given directory."
       (find-file-noselect dir)
       (open-java-project dir))))
 
+;; Add the very handy binding from java-docs
+(define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
+
 ;;; Define bindings for various Ant targets
 
 (defmacro ant-bind (key target)
@@ -247,11 +250,9 @@ the given directory."
   (ant-bind (kbd "C-x r") "run")
   (ant-bind (kbd "C-x t") "test")
   (ant-bind (kbd "C-x y") "check")
-  (ant-bind (kbd "C-x f") "format"))
+  (ant-bind (kbd "C-x f") "format")
+  (define-key java-mode-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
 (setq compilation-scroll-output t)
-
-;; Add the very handy binding from java-docs
-(define-key java-mode-map "\C-xI" 'add-java-import)
