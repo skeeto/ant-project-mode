@@ -192,6 +192,7 @@
 ;;; Code:
 
 (provide 'java-mode-plus)
+(require 'cc-mode)
 
 (defvar open-java-project-extensions '("xml" "java" "properties")
   "File extensions to be opened when using `open-java-project'.")
