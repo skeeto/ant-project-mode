@@ -13,3 +13,6 @@ documentation. For example,
   (java-docs "/usr/share/doc/openjdk-6-jdk/api")
 
 Then use C-h j to look something up.
+
+The snippets directory contains some YASnippets that hook into
+java-docs class completing reads.
