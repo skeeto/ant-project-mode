@@ -196,6 +196,9 @@
 (defvar open-java-project-extensions '("xml" "java" "properties")
   "File extensions to be opened when using `open-java-project'.")
 
+(defvar open-java-project-excludes '("build" ".git" ".svn" ".hg")
+  "Directories that shouldn't be followed by `open-java-project'.")
+
 (defun ant-compile ()
   "Traveling up the path, find build.xml file and run compile."
   (interactive)
@@ -210,6 +213,10 @@
   (let ((ext (file-name-extension file)))
     (member ext open-java-project-extensions)))
 
+(defun open-java-project-dir-p (dir)
+  "Determine if directory should be opened by `open-java-project'."
+  (not (member dir open-java-project-excludes)))
+
 ;; ID: 72dc0a9e-c41c-31f8-c8f5-d9db8482de1e
 (defun open-java-project (dir)
   "Open all java and xml source files and sub-directories below
@@ -222,8 +229,9 @@ the given directory."
       (if (open-java-project-file-p file)
 	  (find-file-noselect file)))
     (dolist (dir dirs)
-      (find-file-noselect dir)
-      (open-java-project dir))))
+      (when (open-java-project-dir-p dir)
+	(find-file-noselect dir)
+	(open-java-project dir)))))
 
 ;; Add the very handy binding from java-docs
 (define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
