@@ -225,8 +225,9 @@ the given directory."
 
 (defmacro ant-bind (key target)
   "Define a key binding for an Ant target in java-mode."
-  `(define-key java-mode-map ,key (lambda () (interactive)
-				    (compile (concat "ant -emacs " ,target " -find")))))
+  `(define-key java-mode-map ,key
+     (lambda () (interactive)
+       (compile (concat "ant -emacs " ,target " -find")))))
 
 (ant-bind (kbd "C-c C-j c") "")		; default Ant target
 (ant-bind (kbd "C-c C-j C") "clean")
