@@ -227,9 +227,12 @@ the given directory."
 
 (defmacro ant-bind (key target)
   "Define a key binding for an Ant target in java-mode."
-  `(define-key java-mode-map ,key
-     (lambda () (interactive)
-       (compile (concat "ant -emacs " ,target " -find")))))
+  `(lexical-let ((target ,target))
+     (define-key java-mode-map ,key
+       (lambda () (interactive)
+	 (compile (concat "ant -emacs "
+			  (if (symbolp target) (symbol-name target) target)
+			  " -find"))))))
 
 (defmacro ant-bind* (&rest keys/fns)
   "Make several ant-bind bindings in a row."
@@ -238,21 +241,21 @@ the given directory."
 	     collecting `(ant-bind (kbd ,key) ,fn))))
 
 (ant-bind* "C-c C-j c" ""		; default Ant target
-	   "C-c C-j C" "clean"
-	   "C-c C-j r" "run"
-	   "C-c C-j t" "test"
-	   "C-c C-j y" "check"
-	   "C-c C-j f" "format")
+	   "C-c C-j C" 'clean
+	   "C-c C-j r" 'run
+	   "C-c C-j t" 'test
+	   "C-c C-j y" 'check
+	   "C-c C-j f" 'format)
 
 (defun java-mode-short-keybindings ()
   "Create (old) short bindings for java-mode."
   (interactive)
   (ant-bind* "C-x c" ""
-	     "C-x C" "clean"
-	     "C-x r" "run"
-	     "C-x t" "test"
-	     "C-x y" "check"
-	     "C-x f" "format")
+	     "C-x C" 'clean
+	     "C-x r" 'run
+	     "C-x t" 'test
+	     "C-x y" 'check
+	     "C-x f" 'format)
   (define-key java-mode-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
