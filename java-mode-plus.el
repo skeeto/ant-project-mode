@@ -176,7 +176,9 @@
 ;;; Code:
 
 (provide 'java-mode-plus)
+
 (require 'cc-mode)
+(require 'cl)
 
 (defvar open-java-project-extensions '("xml" "java" "properties")
   "File extensions to be opened when using `open-java-project'.")
@@ -229,22 +231,28 @@ the given directory."
      (lambda () (interactive)
        (compile (concat "ant -emacs " ,target " -find")))))
 
-(ant-bind (kbd "C-c C-j c") "")		; default Ant target
-(ant-bind (kbd "C-c C-j C") "clean")
-(ant-bind (kbd "C-c C-j r") "run")
-(ant-bind (kbd "C-c C-j t") "test")
-(ant-bind (kbd "C-c C-j y") "check")
-(ant-bind (kbd "C-c C-j f") "format")
+(defmacro ant-bind* (&rest keys/fns)
+  "Make several ant-bind bindings in a row."
+  `(progn
+     ,@(loop for (key fn) on keys/fns by 'cddr
+	     collecting `(ant-bind (kbd ,key) ,fn))))
+
+(ant-bind* "C-c C-j c" ""		; default Ant target
+	   "C-c C-j C" "clean"
+	   "C-c C-j r" "run"
+	   "C-c C-j t" "test"
+	   "C-c C-j y" "check"
+	   "C-c C-j f" "format")
 
 (defun java-mode-short-keybindings ()
   "Create (old) short bindings for java-mode."
   (interactive)
-  (ant-bind (kbd "C-x c") "")
-  (ant-bind (kbd "C-x C") "clean")
-  (ant-bind (kbd "C-x r") "run")
-  (ant-bind (kbd "C-x t") "test")
-  (ant-bind (kbd "C-x y") "check")
-  (ant-bind (kbd "C-x f") "format")
+  (ant-bind* "C-x c" ""
+	     "C-x C" "clean"
+	     "C-x r" "run"
+	     "C-x t" "test"
+	     "C-x y" "check"
+	     "C-x f" "format")
   (define-key java-mode-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
