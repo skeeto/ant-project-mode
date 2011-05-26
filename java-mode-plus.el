@@ -40,8 +40,8 @@
 ;; It is strongly recommended to use in conjunction with this package:
 ;;
 ;; * java-docs - Found alongside java-mode-plus. Provides the
-;;               `insert-java-import' function for quickly adding
-;;               import statements.
+;;               `add-java-import' function for quickly adding import
+;;               statements to the top of the source file.
 ;;
 ;; * ido-mode - Packaged with Emacs for great minibuffer completion.
 ;;
