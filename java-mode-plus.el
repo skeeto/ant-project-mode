@@ -223,6 +223,27 @@ the given directory."
 ;; Add the very handy binding from java-docs
 (define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
 
+
+;;; Helper functions to determine properties of the current source
+
+(defun java-package ()
+  "Returns a guess of the package of the current Java source
+file, based on the absolute filename. The last src/ directory is
+considered the package root."
+  (labels ((last-member (el list)
+	     (let ((match (member el list)))
+	       (if match
+		   (or (last-member el (cdr match)) match)))))
+    (mapconcat 'identity
+	       (butlast (cdr (last-member "src" (split-string
+						 (file-name-directory
+						  buffer-file-name) "/"))))
+	       ".")))
+
+(defun java-class-name ()
+  "Determine the class name from the filename."
+  (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+
 ;;; Define bindings for various Ant targets
 
 (defmacro ant-bind (key target)
