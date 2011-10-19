@@ -266,7 +266,8 @@ considered the package root."
 	   "C-c C-j r" 'run
 	   "C-c C-j t" 'test
 	   "C-c C-j y" 'check
-	   "C-c C-j f" 'format)
+	   "C-c C-j f" 'format
+	   "C-c C-j x" 'hotswap)
 
 (defun java-mode-short-keybindings ()
   "Create (old) short bindings for java-mode."
@@ -276,7 +277,8 @@ considered the package root."
 	     "C-x r" 'run
 	     "C-x t" 'test
 	     "C-x y" 'check
-	     "C-x f" 'format)
+	     "C-x f" 'format
+	     "C-x x" 'hotswap)
   (define-key java-mode-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
