@@ -11,30 +11,29 @@
 
 ;;; Commentary:
 
-;; This package provides a hook that sets up extra features to enhance
-;; java-mode a bit when using an Ant-based project. This is something
-;; to do *instead* of using a large extension like JDEE, which is
-;; large, complex, difficult to set up, and doesn't work very well
-;; anyway.
+;; This package provides a hook that enhances java-mode a bit when
+;; working on an Ant-based project. This is something to do *instead*
+;; of using a large extension like JDEE, which is large, complex,
+;; difficult to set up, and doesn't work very well anyway.
 
 ;; I'm not a fan of giant IDEs. In a corporate setting, someone who
 ;; doesn't know what they're doing will usually pick a big IDE for you
-;; make it difficult to use anything else. I think everyone should be
-;; able to use their preferred source editing tools, whether it be
+;; and make it difficult to use anything else. I think everyone should
+;; be able to use their preferred source editing tools, whether it be
 ;; Emacs, Vim, or Eclipse.
 
 ;; The unix-way is to make many small, well-defined and well-focused
 ;; programs do all the work, so that's what I recommend below. Ant for
-;; project management, AStyle for syntactic style, Checkstyle for
-;; semantic style, and (not so small) Emacs as the magic wand that
-;; directs all the tools. It's like The Sorcerer's Apprentice, but
-;; with better results.
+;; project management, Ivy for dependency management, AStyle for
+;; syntactic style, Checkstyle for semantic style, and (not so small)
+;; Emacs as the magic wand that directs all the tools. It's like The
+;; Sorcerer's Apprentice, but with positive results.
 
-;; With all the tools, the only downside compared to a big Java IDE is
-;; no tool has a complete understanding of the code base. Java is a
-;; verbose language and it helps when you can get the computer to fill
-;; in all the redundant details for you. I don't think Emacs will ever
-;; be able to do this effectively. However, I think Emacs provides
+;; With all these tools, the downside compared to a big Java IDE is no
+;; tool has a complete understanding of the code base. Java is a
+;; verbose language and it helps when the computer can fill in all the
+;; redundant details for you. I don't think Emacs will ever be able to
+;; do this as completely as an IDE. However, I think Emacs provides
 ;; plenty of advantages to counter that level of code awareness.
 
 ;; It is strongly recommended to use in conjunction with this package:
@@ -63,12 +62,19 @@
 ;;     certain target. This is used in the java-mode hook to set up
 ;;     bindings for common Ant targets.
 ;;
-;;     * C-c C-j c - the default Ant target
+;;     * C-c C-j c - "compile" target
+;;     * C-c C-j j - "jar" target
 ;;     * C-c C-j C - "clean" target
 ;;     * C-c C-j r - "run" target
 ;;     * C-c C-j t - "test" target
 ;;     * C-c C-j y - "check" target, if you're using Checkstyle
 ;;     * C-c C-j f - "format" target, if you set up a Java indenter
+;;     * C-c C-j x - "hotswap" target, if you set up Ant hotswap
+;;
+;;     Also provided is `java-mode-short-keybindings', which sets up
+;;     shorter bindings by replacing C-c C-j with C-x. This is not the
+;;     default because they trample the keybinding namespace a bit,
+;;     but they are the bindings I personally use.
 
 ;; * `insert-java-import' - If you have java-docs set up, you can
 ;;     access the quick import insertion function.
@@ -77,17 +83,17 @@
 
 ;; Recommended usage:
 
-;; A typical Ant-based (or also Maven) project typically consists of a
-;; directory layout like so,
+;; A typical Ant-based project typically consists of a directory
+;; layout like so,
 
 ;;   src/    - source files
 ;;   test/   - JUnit test source
-;;   doc/    - documentation, including generated Javadoc docs
+;;   doc/    - documentation, not including generated (Javadoc)
 ;;   dist/   - final deliverable, created and destroyed by Ant
 ;;   build/  - generated/compiled files, created and destroyed by Ant
 
 ;; See my SampleJavaProject for an example of this in action,
-;; http://git.nullprogram.com/?p=SampleJavaProject.git;a=summary
+;; https://github.com/skeeto/SampleJavaProject
 
 ;; Like using the mouse, I like to avoid dropping to a shell whenever
 ;; I can, even if that shell is inside Emacs. If I can stay inside the
