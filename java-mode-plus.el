@@ -264,7 +264,7 @@ considered the package root."
 		(compilation-buffer-name-function (lambda (x) buffer-name)))
 	   (compile (concat "ant -emacs "
 			    (if (symbolp target) (symbol-name target) target)
-			    " -find")))))))
+			    " -find") t))))))
 
 (defmacro ant-bind* (&rest keys/fns)
   "Make several ant-bind bindings in a row."
