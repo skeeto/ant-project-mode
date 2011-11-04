@@ -262,6 +262,7 @@ considered the package root."
 	 (interactive "p")
 	 (let* ((buffer-name (format "*compilation-%d*" n))
 		(compilation-buffer-name-function (lambda (x) buffer-name)))
+	   (save-buffer)
 	   (compile (concat "ant -emacs "
 			    (if (symbolp target) (symbol-name target) target)
 			    " -find") t))))))
