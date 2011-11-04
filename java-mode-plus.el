@@ -261,7 +261,8 @@ considered the package root."
      ,@(loop for (key fn) on keys/fns by 'cddr
 	     collecting `(ant-bind (kbd ,key) ,fn))))
 
-(ant-bind* "C-c C-j c" ""		; default Ant target
+(ant-bind* "C-c C-j c" 'compile		; default Ant target
+	   "C-c C-j j" 'jar
 	   "C-c C-j C" 'clean
 	   "C-c C-j r" 'run
 	   "C-c C-j t" 'test
@@ -272,7 +273,8 @@ considered the package root."
 (defun java-mode-short-keybindings ()
   "Create (old) short bindings for java-mode."
   (interactive)
-  (ant-bind* "C-x c" ""
+  (ant-bind* "C-x c" 'compile
+	     "C-x j" 'jar
 	     "C-x C" 'clean
 	     "C-x r" 'run
 	     "C-x t" 'test
