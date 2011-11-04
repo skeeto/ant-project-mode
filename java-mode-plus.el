@@ -226,10 +226,6 @@ the given directory."
 	(find-file-noselect dir)
 	(open-java-project dir)))))
 
-;; Add the very handy binding from java-docs
-(define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
-
-
 ;;; Helper functions to determine properties of the current source
 
 (defun java-package ()
@@ -275,6 +271,9 @@ considered the package root."
 	   "C-c C-j y" 'check
 	   "C-c C-j f" 'format
 	   "C-c C-j x" 'hotswap)
+
+;; Add the very handy binding from java-docs
+(define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
 
 (defun java-mode-short-keybindings ()
   "Create (old) short bindings for java-mode."
