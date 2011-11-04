@@ -75,6 +75,12 @@
 ;;     shorter bindings by replacing C-c C-j with C-x. This is not the
 ;;     default because they trample the keybinding namespace a bit,
 ;;     but they are the bindings I personally use.
+;;
+;;     These compilation bindings, created by `ant-bind', accept a
+;;     prefix argument, which appends the number to the compilation
+;;     buffer name. This is useful when you need to run two
+;;     compilation buffers at once: give each one a different
+;;     prefix. My favorite use of this is for code hotswapping.
 
 ;; * `insert-java-import' - If you have java-docs set up, you can
 ;;     access the quick import insertion function.
@@ -252,10 +258,13 @@ considered the package root."
   "Define a key binding for an Ant target in java-mode."
   `(lexical-let ((target ,target))
      (define-key java-mode-map ,key
-       (lambda () (interactive)
-	 (compile (concat "ant -emacs "
-			  (if (symbolp target) (symbol-name target) target)
-			  " -find"))))))
+       (lambda (n)
+	 (interactive "p")
+	 (let* ((buffer-name (format "*compilation-%d*" n))
+		(compilation-buffer-name-function (lambda (x) buffer-name)))
+	   (compile (concat "ant -emacs "
+			    (if (symbolp target) (symbol-name target) target)
+			    " -find")))))))
 
 (defmacro ant-bind* (&rest keys/fns)
   "Make several ant-bind bindings in a row."
