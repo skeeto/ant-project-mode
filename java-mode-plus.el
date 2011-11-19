@@ -198,6 +198,9 @@
 (defvar open-java-project-excludes '("build" ".git" ".svn" ".hg")
   "Directories that shouldn't be followed by `open-java-project'.")
 
+(defvar java-package-roots '("src" "test")
+  "List of directories that tend to be at the root of packages.")
+
 (defun ant-compile ()
   "Traveling up the path, find build.xml file and run compile."
   (interactive)
@@ -236,17 +239,14 @@ the given directory."
 
 (defun java-package ()
   "Returns a guess of the package of the current Java source
-file, based on the absolute filename. The last src/ directory is
-considered the package root."
-  (labels ((last-member (el list)
-	     (let ((match (member el list)))
-	       (if match
-		   (or (last-member el (cdr match)) match)))))
-    (mapconcat 'identity
-	       (butlast (cdr (last-member "src" (split-string
-						 (file-name-directory
-						  buffer-file-name) "/"))))
-	       ".")))
+file, based on the absolute filename. Package roots are matched
+against `java-package-roots'."
+  (labels ((search-root (stack path)
+	     (if (or (null path) (member (car path) java-package-roots))
+		 (mapconcat 'identity stack ".")
+	       (search-root (cons (car path) stack) (cdr path)))))
+    (search-root '() (cdr (reverse (split-string (file-name-directory
+						  buffer-file-name) "/"))))))
 
 (defun java-class-name ()
   "Determine the class name from the filename."
