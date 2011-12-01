@@ -229,11 +229,11 @@ the given directory."
          (dirs (remove-if-not 'file-directory-p list)))
     (dolist (file files)
       (if (open-java-project-file-p file)
-	  (find-file-noselect file)))
+          (find-file-noselect file)))
     (dolist (dir dirs)
       (when (open-java-project-dir-p dir)
-	(find-file-noselect dir)
-	(open-java-project dir)))))
+        (find-file-noselect dir)
+        (open-java-project dir)))))
 
 ;;; Helper functions to determine properties of the current source
 
@@ -242,11 +242,11 @@ the given directory."
 file, based on the absolute filename. Package roots are matched
 against `java-package-roots'."
   (labels ((search-root (stack path)
-	     (if (or (null path) (member (car path) java-package-roots))
-		 (mapconcat 'identity stack ".")
-	       (search-root (cons (car path) stack) (cdr path)))))
+             (if (or (null path) (member (car path) java-package-roots))
+                 (mapconcat 'identity stack ".")
+               (search-root (cons (car path) stack) (cdr path)))))
     (search-root '() (cdr (reverse (split-string (file-name-directory
-						  buffer-file-name) "/"))))))
+                                                  buffer-file-name) "/"))))))
 
 (defun java-class-name ()
   "Determine the class name from the filename."
@@ -259,26 +259,26 @@ against `java-package-roots'."
   `(lexical-let ((target ,target))
      (define-key java-mode-map ,key
        (lambda (n)
-	 (interactive "p")
-	 (let* ((buffer-name (format "*compilation-%d*" n))
-		(compilation-buffer-name-function (lambda (x) buffer-name)))
-	   (save-buffer)
-	   (compile (format "ant -emacs %s -find" target) t))))))
+         (interactive "p")
+         (let* ((buffer-name (format "*compilation-%d*" n))
+                (compilation-buffer-name-function (lambda (x) buffer-name)))
+           (save-buffer)
+           (compile (format "ant -emacs %s -find" target) t))))))
 
 (defmacro ant-bind* (&rest keys/fns)
   "Make several ant-bind bindings in a row."
   `(progn
      ,@(loop for (key fn) on keys/fns by 'cddr
-	     collecting `(ant-bind (kbd ,key) ,fn))))
+             collecting `(ant-bind (kbd ,key) ,fn))))
 
 (ant-bind* "C-c C-j c" 'compile		; default Ant target
-	   "C-c C-j j" 'jar
-	   "C-c C-j C" 'clean
-	   "C-c C-j r" 'run
-	   "C-c C-j t" 'test
-	   "C-c C-j y" 'check
-	   "C-c C-j f" 'format
-	   "C-c C-j x" 'hotswap)
+           "C-c C-j j" 'jar
+           "C-c C-j C" 'clean
+           "C-c C-j r" 'run
+           "C-c C-j t" 'test
+           "C-c C-j y" 'check
+           "C-c C-j f" 'format
+           "C-c C-j x" 'hotswap)
 
 ;; Add the very handy binding from java-docs
 (define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
@@ -287,13 +287,13 @@ against `java-package-roots'."
   "Create (old) short bindings for java-mode."
   (interactive)
   (ant-bind* "C-x c" 'compile
-	     "C-x j" 'jar
-	     "C-x C" 'clean
-	     "C-x r" 'run
-	     "C-x t" 'test
-	     "C-x y" 'check
-	     "C-x f" 'format
-	     "C-x x" 'hotswap)
+             "C-x j" 'jar
+             "C-x C" 'clean
+             "C-x r" 'run
+             "C-x t" 'test
+             "C-x y" 'check
+             "C-x f" 'format
+             "C-x x" 'hotswap)
   (define-key java-mode-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
