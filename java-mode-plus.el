@@ -299,3 +299,5 @@ against `java-package-roots'."
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
 (setq compilation-scroll-output t)
+
+;; java-mode-plus.el ends here
