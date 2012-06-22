@@ -11,10 +11,10 @@
 
 ;;; Commentary:
 
-;; This package provides a hook that enhances java-mode a bit when
-;; working on an Ant-based project. This is something to do *instead*
-;; of using a large extension like JDEE, which is large, complex,
-;; difficult to set up, and doesn't work very well anyway.
+;; This package provides a minor-mode that enhances java-mode a bit
+;; when working with Ant-based projects. This is something to do
+;; *instead* of using a large extension like JDEE, which is large,
+;; complex, difficult to set up, and doesn't work very well anyway.
 
 ;; I'm not a fan of giant IDEs. In a corporate setting, someone who
 ;; doesn't know what they're doing will usually pick a big IDE for you
@@ -58,9 +58,8 @@
 ;;     the same time exposing lots of names for `dabbrev-expand'
 ;;     (M-/) to use.
 
-;; * `create-ant-target' - Create a function that calls and with a
-;;     certain target. This is used in the java-mode hook to set up
-;;     bindings for common Ant targets.
+;; * `ant-bind' and `ant-bind*' - Create a keybinding for a specific
+;;     Ant target. These have already been defined.
 ;;
 ;;     * C-c C-j c - "compile" target
 ;;     * C-c C-j j - "jar" target
@@ -76,11 +75,11 @@
 ;;     default because they trample the keybinding namespace a bit,
 ;;     but they are the bindings I personally use.
 ;;
-;;     These compilation bindings, created by `ant-bind', accept a
-;;     prefix argument, which appends the number to the compilation
-;;     buffer name. This is useful when you need to run two
-;;     compilation buffers at once: give each one a different
-;;     prefix. My favorite use of this is for code hotswapping.
+;;     These compilation bindings all accept a prefix argument, which
+;;     appends the number to the compilation buffer name. This is
+;;     useful when you need to run two compilation buffers at once:
+;;     give each one a different prefix. My favorite use of this is
+;;     for code hotswapping.
 
 ;; * `insert-java-import' - If you have java-docs set up, you can
 ;;     access the quick import insertion function.
