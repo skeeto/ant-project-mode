@@ -187,10 +187,17 @@
 
 ;;; Code:
 
-(provide 'java-mode-plus)
-
 (require 'cc-mode)
 (require 'cl)
+
+(defvar java-mode-plus-map (make-sparse-keymap)
+  "Keymap for the java-mode-plus minor mode.")
+
+(define-minor-mode java-mode-plus
+  "Extensions to java-mode for further support with standard Java tools."
+  nil
+  " jm+"
+  java-mode-plus-map)
 
 (defvar open-java-project-extensions '("xml" "java" "properties")
   "File extensions to be opened when using `open-java-project'.")
@@ -257,7 +264,7 @@ against `java-package-roots'."
 (defmacro ant-bind (key target)
   "Define a key binding for an Ant target in java-mode."
   `(lexical-let ((target ,target))
-     (define-key java-mode-map ,key
+     (define-key java-mode-plus-map ,key
        (lambda (n)
          (interactive "p")
          (let* ((buffer-name (format "*compilation-%d*" n))
@@ -281,7 +288,7 @@ against `java-package-roots'."
            "C-c C-j x" 'hotswap)
 
 ;; Add the very handy binding from java-docs
-(define-key java-mode-map (kbd "C-c C-j i") 'add-java-import)
+(define-key java-mode-plus-map (kbd "C-c C-j i") 'add-java-import)
 
 (defun java-mode-short-keybindings ()
   "Create (old) short bindings for java-mode."
@@ -294,10 +301,15 @@ against `java-package-roots'."
              "C-x y" 'check
              "C-x f" 'format
              "C-x x" 'hotswap)
-  (define-key java-mode-map (kbd "C-x I") 'add-java-import))
+  (define-key java-mode-plus-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
 (setq compilation-scroll-output t)
+
+;; Enable the minor mode wherever java-mode is used.
+(add-hook 'java-mode-hook 'java-mode-plus)
+
+(provide 'java-mode-plus)
 
 ;; java-mode-plus.el ends here
