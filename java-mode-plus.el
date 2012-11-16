@@ -192,11 +192,11 @@
 (defvar java-mode-plus-map (make-sparse-keymap)
   "Keymap for the java-mode-plus minor mode.")
 
+;;;###autoload
 (define-minor-mode java-mode-plus
   "Extensions to java-mode for further support with standard Java tools."
-  nil
-  " jm+"
-  java-mode-plus-map)
+  :lighter " jm+"
+  :keymap 'java-mode-plus-map)
 
 (defvar open-java-project-extensions '("xml" "java" "properties")
   "File extensions to be opened when using `open-java-project'.")
@@ -207,6 +207,7 @@
 (defvar java-package-roots '("src" "test")
   "List of directories that tend to be at the root of packages.")
 
+;;;###autoload
 (defun ant-compile ()
   "Traveling up the path, find build.xml file and run compile."
   (interactive)
@@ -226,6 +227,7 @@
   (not (member dir open-java-project-excludes)))
 
 ;; ID: 72dc0a9e-c41c-31f8-c8f5-d9db8482de1e
+;;;###autoload
 (defun open-java-project (dir)
   "Open all java and xml source files and sub-directories below
 the given directory."
@@ -243,6 +245,7 @@ the given directory."
 
 ;;; Helper functions to determine properties of the current source
 
+;;;###autoload
 (defun java-package ()
   "Returns a guess of the package of the current Java source
 file, based on the absolute filename. Package roots are matched
@@ -254,6 +257,7 @@ against `java-package-roots'."
     (search-root '() (cdr (reverse (split-string (file-name-directory
                                                   buffer-file-name) "/"))))))
 
+;;;###autoload
 (defun java-class-name ()
   "Determine the class name from the filename."
   (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
@@ -307,6 +311,7 @@ against `java-package-roots'."
 (setq compilation-scroll-output t)
 
 ;; Enable the minor mode wherever java-mode is used.
+;;;###autoload
 (add-hook 'java-mode-hook 'java-mode-plus)
 
 (provide 'java-mode-plus)
