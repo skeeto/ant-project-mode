@@ -1,29 +1,13 @@
-# Emacs Java Support
+# ant-project-mode (minor mode)
 
-See the header comments in each file for full documentation. The
-recommended usage is in java-mode-plus.el.
+This package provides the minor mode `ant-project-mode` for use with
+java-mode and build.xml files. To install put this directory in your
+load-path.
 
-To install drop these in your load-path somewhere and require them
-(after enabling ido-mode, if you use ido-mode),
+See the header comment in ant-project-mode.el for recommended usage.
 
-```el
-(require 'java-mode-plus)
-(require 'java-docs)
-```
+## Overview
 
-## Depreciation
-
-**NOTICE**: The java-docs portion of this package is depreciated. It
-has been replaced by the more powerful
-[javadoc-lookup](https://github.com/skeeto/javadoc-lookup). Use that
-instead.
-
-To use java-docs you'll need to tell it where to find some
-documentation. For example,
-
-```el
-(java-docs "/usr/share/doc/openjdk-6-jdk/api")
-```
-
-The snippets directory contains some YASnippets that hook into
-java-docs class completing reads.
+Provides bindings for invoking Ant with various standard targets, a
+function for opening entire Ant-based projects at once, and YASnippet
+snippets.

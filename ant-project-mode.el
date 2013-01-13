@@ -1,13 +1,11 @@
-;;; java-mode-plus.el --- Java and java-mode Emacs enhancements
+;;; ant-project-mode.el --- minor mode supporting Apache Ant projects
 
 ;; This is free and unencumbered software released into the public domain.
 
-;;; Install:
-
-;; Put this file somewhere on your load path (like in .emacs.d), and
-;; require it. That's it!
-
-;;    (require 'java-mode-plus)
+;; Author: Christopher Wellons <mosquitopsu@gmail.com>
+;; URL: https://github.com/skeeto/ant-project-mode
+;; Version: 1.0
+;; Package-Requires: ((javadoc-lookup "1.0"))
 
 ;;; Commentary:
 
@@ -38,14 +36,15 @@
 
 ;; It is strongly recommended to use in conjunction with this package:
 ;;
-;; * java-docs - Found alongside java-mode-plus. Provides the
-;;               `add-java-import' function for quickly adding import
-;;               statements to the top of the source file.
+;; * javadoc-lookup - Quick lookup of Javadoc documentaiton, including
+;;     fetching documentation with Maven. Provides `add-java-import'
+;;     function for effortlessly adding import statements to the top
+;;     of the current source file.
 ;;
 ;; * ido-mode - Packaged with Emacs for great minibuffer completion.
 ;;
 ;; * winner-mode - Maximize Emacs, split into a bunch of windows, and
-;;                 hop around them quickly with this.
+;;     hop around them quickly with this.
 
 ;; Enhancements to java-mode:
 
@@ -70,7 +69,7 @@
 ;;     * C-c C-j f - "format" target, if you set up a Java indenter
 ;;     * C-c C-j x - "hotswap" target, if you set up Ant hotswap
 ;;
-;;     Also provided is `java-mode-short-keybindings', which sets up
+;;     Also provided is `ant-project-short-keybindings', which sets up
 ;;     shorter bindings by replacing C-c C-j with C-x. This is not the
 ;;     default because they trample the keybinding namespace a bit,
 ;;     but they are the bindings I personally use.
@@ -81,7 +80,7 @@
 ;;     give each one a different prefix. My favorite use of this is
 ;;     for code hotswapping.
 
-;; * `insert-java-import' - If you have java-docs set up, you can
+;; * `insert-java-import' - If you have javadoc-lookup set up, you can
 ;;     access the quick import insertion function.
 ;;
 ;;     * C-c C-j i - quickly select an import to insert
@@ -186,17 +185,18 @@
 
 ;;; Code:
 
-(require 'cc-mode)
 (require 'cl)
+(require 'cc-mode)
+(require 'javadoc-lookup)
 
-(defvar java-mode-plus-map (make-sparse-keymap)
+(defvar ant-project-mode-map (make-sparse-keymap)
   "Keymap for the java-mode-plus minor mode.")
 
 ;;;###autoload
-(define-minor-mode java-mode-plus
+(define-minor-mode ant-project-mode
   "Extensions to java-mode for further support with standard Java tools."
-  :lighter " jm+"
-  :keymap 'java-mode-plus-map)
+  :lighter " Ant"
+  :keymap 'ant-project-mode-map)
 
 (defvar open-java-project-extensions '("xml" "java" "properties")
   "File extensions to be opened when using `open-java-project'.")
@@ -204,7 +204,7 @@
 (defvar open-java-project-excludes '("build" ".git" ".svn" ".hg")
   "Directories that shouldn't be followed by `open-java-project'.")
 
-(defvar java-package-roots '("src" "test")
+(defvar ant-project-source-roots '("src" "test")
   "List of directories that tend to be at the root of packages.")
 
 ;;;###autoload
@@ -219,8 +219,7 @@
 
 (defun open-java-project-file-p (file)
   "Determine if file should be opened by `open-java-project'."
-  (let ((ext (file-name-extension file)))
-    (member ext open-java-project-extensions)))
+  (member (file-name-extension file) open-java-project-extensions))
 
 (defun open-java-project-dir-p (dir)
   "Determine if directory should be opened by `open-java-project'."
@@ -229,7 +228,7 @@
 ;; ID: 72dc0a9e-c41c-31f8-c8f5-d9db8482de1e
 ;;;###autoload
 (defun open-java-project (dir)
-  "Open all java and xml source files and sub-directories below
+  "Open all Java and xml source files and sub-directories below
 the given directory."
   (interactive "DBase directory: ")
   (let* ((list (directory-files dir t "^[^.]"))
@@ -246,19 +245,19 @@ the given directory."
 ;;; Helper functions to determine properties of the current source
 
 ;;;###autoload
-(defun java-package ()
+(defun java-buffer-package ()
   "Returns a guess of the package of the current Java source
 file, based on the absolute filename. Package roots are matched
-against `java-package-roots'."
+against `ant-project-source-roots'."
   (labels ((search-root (stack path)
-             (if (or (null path) (member (car path) java-package-roots))
+             (if (or (null path) (member (car path) ant-project-source-roots))
                  (mapconcat 'identity stack ".")
                (search-root (cons (car path) stack) (cdr path)))))
     (search-root '() (cdr (reverse (split-string (file-name-directory
                                                   buffer-file-name) "/"))))))
 
 ;;;###autoload
-(defun java-class-name ()
+(defun java-buffer-class-name ()
   "Determine the class name from the filename."
   (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
 
@@ -290,10 +289,10 @@ against `java-package-roots'."
            "C-c C-j f" 'format
            "C-c C-j x" 'hotswap)
 
-;; Add the very handy binding from java-docs
-(define-key java-mode-plus-map (kbd "C-c C-j i") 'add-java-import)
+;; Add the very handy binding from javadoc-lookup
+(define-key ant-project-mode-map (kbd "C-c C-j i") 'add-java-import)
 
-(defun java-mode-short-keybindings ()
+(defun ant-project-short-keybindings ()
   "Create (old) short bindings for java-mode."
   (interactive)
   (ant-bind* "C-x c" 'compile
@@ -304,7 +303,7 @@ against `java-package-roots'."
              "C-x y" 'check
              "C-x f" 'format
              "C-x x" 'hotswap)
-  (define-key java-mode-plus-map (kbd "C-x I") 'add-java-import))
+  (define-key ant-project-mode-map (kbd "C-x I") 'add-java-import))
 
 ;; This is here for the sake of the "run" Ant target above, so you can
 ;; see your program's output live.
@@ -312,8 +311,8 @@ against `java-package-roots'."
 
 ;; Enable the minor mode wherever java-mode is used.
 ;;;###autoload
-(add-hook 'java-mode-hook 'java-mode-plus)
+(add-hook 'java-mode-hook 'ant-project-mode-map)
 
-(provide 'java-mode-plus)
+(provide 'ant-project-mode)
 
-;; java-mode-plus.el ends here
+;; ant-project-mode.el ends here
