@@ -180,8 +180,8 @@
 ;; Closing remarks:
 
 ;; As I develop and improve my Java workflow, I'm gradually building
-;; up java-mode-plus to match. As long as I continue to use Java, this
-;; package will slowly grow.
+;; up ant-project-mode and javadoc-lookup to match. As long as I
+;; continue to use Java, this package will slowly grow.
 
 ;;; Code:
 
@@ -190,7 +190,7 @@
 (require 'javadoc-lookup)
 
 (defvar ant-project-mode-map (make-sparse-keymap)
-  "Keymap for the java-mode-plus minor mode.")
+  "Keymap for the ant-project-mode minor mode.")
 
 ;;;###autoload
 (define-minor-mode ant-project-mode
@@ -266,7 +266,7 @@ against `ant-project-source-roots'."
 (defmacro ant-bind (key target)
   "Define a key binding for an Ant target in java-mode."
   `(lexical-let ((target ,target))
-     (define-key java-mode-plus-map ,key
+     (define-key ant-project-mode-map ,key
        (lambda (n)
          (interactive "p")
          (let* ((buffer-name (format "*compilation-%d*" n))
