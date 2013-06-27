@@ -311,7 +311,7 @@ against `ant-project-source-roots'."
 
 ;; Enable the minor mode wherever java-mode is used.
 ;;;###autoload
-(add-hook 'java-mode-hook 'ant-project-mode-map)
+(add-hook 'java-mode-hook 'ant-project-mode)
 
 (provide 'ant-project-mode)
 
